@@ -17,9 +17,9 @@ public class Main {
     public static Double convertWithPatterMaching(Object obj){
         return switch(obj) {
             case String s -> Double.parseDouble(s);
-            case Integer i -> i.doubleValue();
-            // case Integer i && i>10 -> i.doubleValue(); é como um If
-            // case Integer i -> 5; é como um else
+            //case Integer i -> i.doubleValue();
+             case Integer i when i > 10 -> i.doubleValue(); // é como um If
+             case Integer i -> 5d; // é como um else
             // O mais genérico coloca em baixo
             case null -> 2d;
             default -> 0d;

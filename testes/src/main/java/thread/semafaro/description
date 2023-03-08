@@ -1,4 +1,0 @@
-Criar um semafaro usando Threads.
-O semafaro deve ficar verde por x segundos, depois
-brevemente amarelo seguido de y segundos
-na cor vermelha

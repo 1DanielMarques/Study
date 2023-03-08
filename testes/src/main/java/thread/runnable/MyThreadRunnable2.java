@@ -1,21 +1,15 @@
 package thread.runnable;
 
-public class MyThreadRunnable implements Runnable {
+public class MyThreadRunnable2 implements Runnable {
+
+
 
     private String name;
     private int time;
 
-    public MyThreadRunnable(String name, int time){
+    public MyThreadRunnable2(String name, int time){
         this.name = name;
         this.time = time;
-        Thread t = new Thread(this);
-        t.start();
-        try {
-            t.join();
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-
     }
 
     @Override

@@ -10,9 +10,9 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>testes</artifactId>
+    <artifactId>core</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <name>testes</name>
+    <name>core</name>
 
     <properties>
         <maven.compiler.source>19</maven.compiler.source>

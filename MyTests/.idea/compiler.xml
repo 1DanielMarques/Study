@@ -1,14 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
+    <excludeFromCompile>
+      <directory url="file://$PROJECT_DIR$/core/src/main/resources/archetype-resources" includeSubdirectories="true" />
+    </excludeFromCompile>
     <annotationProcessing>
       <profile name="Maven default annotation processors profile" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="core" />
         <module name="testes2" />
         <module name="testes" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="slaman3" target="19" />
+      <module name="testes3" target="19" />
+    </bytecodeTargetLevel>
   </component>
 </project>

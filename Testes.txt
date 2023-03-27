@@ -84,8 +84,22 @@ Realizar testes de integração não é testar a lógica das unidades, mas testa
 		> Teste automatizado
 
 
-
-
+> Mock:
+	> Objetos que utilizamods para "simular" interações de saída com dependencias externas ao nosso teste. Essas interações de saída são chamadas que o nosso teste realiza para mudar o seu estado.
+	> Com mocks podemos controlar e inspecionar as chamadas para essa falsa dependência. O Mock simula seu comportamento verificando se um ou mais métodos foram ou não chamados, a ordem de chamadas destes métodos, se esses métodos foram chamados com os argumentos certos e quantas vezes foram chamados.
+	> Usar mocks para:
+		> Testar se um ou mais métodos de uma dependência externa foi chamado corretamente;
+		> Testar quantas vezes esses métodos foram chamados
+		> Testar se esses métodos foram chamados com os parâmetros corretos
+	> Não usar mocks para:
+		> Testar valores retornados por uma função
+		> Testar comportamentos de uma função
+	
+> Stub:
+	> Objetos que usamos para simular interações de chegada de alguma dependência externa ao SUT (System under test). Diferente do mock, stubs são objetos com respostas prontas para serem usados no nosso teste. Eles não sabem responder quantas vezes um método de uma dependência externa foi ou não chamado e quais parâmetros foram usados, apenas trazem respostas prontas.
+	> Usar stubs para:
+		> Testar retornos de uma dependência externa
+		> Testar o comportamento do nosso SUT frente aos diferentes retornos da API. Por exemplo, retornos de sucesso, falhas ou exceções;
 
 
 

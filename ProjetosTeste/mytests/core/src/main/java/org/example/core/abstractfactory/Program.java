@@ -9,6 +9,23 @@ import org.example.core.abstractfactory.products.Sofa;
 
 public class Program {
 
+    static class Application {
+        private Chair chair;
+        private Sofa sofa;
+
+        public Application(AbstractFactory factory) {
+            this.chair = factory.createChair();
+            this.sofa = factory.createSofa();
+        }
+
+        public void print() {
+            chair.print();
+            sofa.print();
+        }
+
+    }
+
+
     public static AbstractFactory createFactory(int type) {
         //newest switch expression here
         return switch (type) {
@@ -24,15 +41,10 @@ public class Program {
         // 2 to retro
         // 3 to classic
         // . . .
-        var factory = createFactory(3);
-        Chair chair = factory.createChair();
-        chair.print();
-        System.out.println("Has legs: " + chair.hasLegs());
-        Sofa sofa = factory.createSofa();
-        sofa.print();
-        System.out.println("Has cushions: "+sofa.hasCushion());
-
-
+        var application = new Application(createFactory(2));
+        application.print();
 
     }
+
+
 }

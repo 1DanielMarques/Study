@@ -22,10 +22,14 @@ public class Program {
     public static void main(String[] args) {
         // 1 to modern
         // 2 to retro
+        // 3 to classic
+        // . . .
         var factory = createFactory(3);
         Chair chair = factory.createChair();
+        chair.print();
         System.out.println("Has legs: " + chair.hasLegs());
         Sofa sofa = factory.createSofa();
+        sofa.print();
         System.out.println("Has cushions: "+sofa.hasCushion());
 
 

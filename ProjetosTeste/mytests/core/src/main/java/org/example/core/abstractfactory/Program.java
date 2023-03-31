@@ -4,21 +4,20 @@ import org.example.core.abstractfactory.factories.AbstractFactory;
 import org.example.core.abstractfactory.factories.ClassicFactory;
 import org.example.core.abstractfactory.factories.ModernFactory;
 import org.example.core.abstractfactory.factories.RetroFactory;
-import org.example.core.abstractfactory.products.Chair;
-import org.example.core.abstractfactory.products.Sofa;
 
 public class Program {
 
     static class Application {
-        private Chair chair;
-        private Sofa sofa;
+
+        private AbstractFactory abstractFactory;
 
         public Application(AbstractFactory factory) {
-            this.chair = factory.createChair();
-            this.sofa = factory.createSofa();
+            this.abstractFactory = factory;
         }
 
         public void print() {
+            var chair = this.abstractFactory.createChair();
+            var sofa = this.abstractFactory.createSofa();
             chair.print();
             sofa.print();
         }

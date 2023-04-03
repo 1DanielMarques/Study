@@ -1,4 +1,4 @@
-package org.example.core.teste.gubee;
+package org.example.core.teste.gubee.diagram;
 
 public class SmsPresenter implements PresenterNotification{
     @Override

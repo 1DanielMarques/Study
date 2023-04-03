@@ -1,30 +1,45 @@
 package br.com.gubee.transaction.service;
 
+import br.com.gubee.transaction.annotation.Transaction;
 import br.com.gubee.transaction.model.User;
-import br.com.gubee.transaction.persistence.UserRepository;
-import lombok.RequiredArgsConstructor;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.UUID;
 
-@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
-    private final UserRepository repository;
+    private Map<UUID, User> repository = new HashMap<>();
 
-    public User createUser(User user) {
-        return repository.create(user);
+    @Override
+    @Transaction
+    public User create(User user) {
+        user.setId(UUID.randomUUID());
+        repository.put(user.getId(), user);
+        return findById(user.getId());
     }
 
+    @Override
     public User findById(UUID id) {
-        return repository.findById(id);
+        var user = repository.get(id);
+        if (user != null) return user;
+        throw new NoSuchElementException();
     }
 
+    @Override
+    @Transaction
+    public User updateById(UUID id, User userToUpdate) {
+        findById(id);
+        userToUpdate.setId(id);
+        repository.put(userToUpdate.getId(), userToUpdate);
+        return findById(id);
+    }
+
+    @Override
+    @Transaction
     public void deleteById(UUID id) {
-        repository.deleteById(id);
+        findById(id);
+        repository.remove(id);
     }
-
-    public User updateById(UUID id, User newUser) {
-        return repository.updateById(id, newUser);
-    }
-
 }

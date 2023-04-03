@@ -7,15 +7,16 @@ import java.util.UUID;
 
 public interface UserService {
 
+
     @Transaction
-    User createUser(User user);
+    User create(User user);
 
     User findById(UUID id);
 
     @Transaction
-    void deleteById(UUID id);
+    User updateById(UUID id, User userToUpdate);
 
     @Transaction
-    User updateById(UUID id, User newUser);
+    void deleteById(UUID id);
 
 }

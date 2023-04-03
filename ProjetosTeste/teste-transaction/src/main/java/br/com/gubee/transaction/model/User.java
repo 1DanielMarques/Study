@@ -10,10 +10,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {
-
     private UUID id;
     private String name;
-    private Integer age;
-
-
+    private int age;
 }

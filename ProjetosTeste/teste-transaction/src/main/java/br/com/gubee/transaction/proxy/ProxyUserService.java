@@ -3,14 +3,15 @@ package br.com.gubee.transaction.proxy;
 import br.com.gubee.transaction.annotation.Transaction;
 import br.com.gubee.transaction.model.User;
 import br.com.gubee.transaction.service.UserService;
-import br.com.gubee.transaction.service.UserServiceImpl;
+import lombok.RequiredArgsConstructor;
 
 import java.lang.reflect.Method;
 import java.util.UUID;
 
+@RequiredArgsConstructor
 public class ProxyUserService implements UserService {
 
-    private UserService service = new UserServiceImpl();
+    private final UserService service;
 
     @Override
     public User create(User user) {

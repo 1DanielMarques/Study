@@ -15,86 +15,54 @@ public class ProxyUserService implements UserService {
 
     @Override
     public User create(User user) {
-        try {
-            Method method = service.getClass().getDeclaredMethod("create", User.class);
-            if (method.isAnnotationPresent(Transaction.class)) {
-                System.out.println("Pattern Proxy");
-                System.out.println("Iniciando execução do método " + method.getName());
-                try {
-                    User result = (User) method.invoke(this.service, user);
-                    System.out.println("Finalizando execução do método " + method.getName() + " com sucesso");
-                    return result;
-                } catch (Exception e) {
-                    System.out.println("Finalizando execução do método " + method.getName() + " com erro");
-                    return null;
-                }
-            }
-            return (User) method.invoke(this.service, user);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        var method = getMethod("create", User.class);
+        return (User) executeMethod(method, user);
     }
 
     @Override
     public User findById(UUID id) {
-        try {
-            Method method = service.getClass().getDeclaredMethod("findById", UUID.class);
-            if (method.isAnnotationPresent(Transaction.class)) {
-                System.out.println("Pattern Proxy");
-                System.out.println("Iniciando execução do método " + method.getName());
-                try {
-                    User result = (User) method.invoke(this.service, id);
-                    System.out.println("Finalizando execução do método " + method.getName() + " com sucesso");
-                    return result;
-                } catch (Exception e) {
-                    System.out.println("Finalizando execução do método " + method.getName() + " com erro");
-                    return null;
-                }
-            }
-            return (User) method.invoke(this.service, id);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        var method = getMethod("findById", UUID.class);
+        return (User) executeMethod(method, id);
     }
 
     @Override
     public User updateById(UUID id, User userToUpdate) {
-        try {
-            Method method = service.getClass().getDeclaredMethod("updateById", UUID.class, User.class);
-            if (method.isAnnotationPresent(Transaction.class)) {
-                System.out.println("Pattern Proxy");
-                System.out.println("Iniciando execução do método " + method.getName());
-                try {
-                    User result = (User) method.invoke(this.service, id, userToUpdate);
-                    System.out.println("Finalizando execução do método " + method.getName() + " com sucesso");
-                    return result;
-                } catch (Exception e) {
-                    System.out.println("Finalizando execução do método " + method.getName() + " com erro");
-                    return null;
-                }
-            }
-            return (User) method.invoke(this.service, id, userToUpdate);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        var method = getMethod("updateById", UUID.class, User.class);
+        return (User) executeMethod(method, id, userToUpdate);
     }
 
     @Override
     public void deleteById(UUID id) {
-        try {
-            Method method = service.getClass().getDeclaredMethod("deleteById", UUID.class);
-            if (method.isAnnotationPresent(Transaction.class)) {
-                System.out.println("Pattern Proxy");
-                System.out.println("Iniciando execução do método " + method.getName());
-                try {
-                    User result = (User) method.invoke(this.service, id);
-                    System.out.println("Finalizando execução do método " + method.getName() + " com sucesso");
-                } catch (Exception e) {
-                    System.out.println("Finalizando execução do método " + method.getName() + " com erro");
-                }
+        var method = getMethod("deleteById", UUID.class);
+        executeMethod(method, id);
+    }
+
+
+    private Object executeMethod(Method method, Object... parameters) {
+        if (method.isAnnotationPresent(Transaction.class)) {
+            System.out.println("Pattern Proxy");
+            System.out.println("Iniciando execução do método " + method.getName());
+            try {
+                var result = method.invoke(this.service, parameters);
+                System.out.println("Finalizando execução do método " + method.getName() + " com sucesso");
+                return result;
+            } catch (Exception e) {
+                System.out.println("Finalizando execução do método " + method.getName() + " com erro");
+                return null;
             }
+        }
+        try {
+            return method.invoke(this.service, parameters);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            return null;
+        }
+    }
+
+    private Method getMethod(String methodName, Class... parametersType) {
+        try {
+            return this.service.getClass().getDeclaredMethod(methodName, parametersType);
+        } catch (Exception e) {
+            throw new RuntimeException("Invalid method");
         }
     }
 }

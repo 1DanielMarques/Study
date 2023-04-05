@@ -40,26 +40,28 @@ public class ProxyUserService implements UserService {
             var method = this.service.getClass().getDeclaredMethod(methodName, parameters);
             return method;
         } catch (Exception e) {
-            throw new RuntimeException();
+            throw new RuntimeException("Invalid method");
         }
     }
 
 
     private Object executeMethod(Method method, MyInterface myInterface) {
+        var parameters = myInterface.get();
+        var finishMessage = "Finalizando execução do método " + method.getName() + " com ";
         try {
             if (method.isAnnotationPresent(Transaction.class)) {
                 System.out.println("Pattern Proxy");
                 System.out.println("Iniciando execução do método " + method.getName());
                 try {
-                    var result = method.invoke(this.service, myInterface.get());
-                    System.out.println("Finalizando execução do método " + method.getName() + " com sucesso");
+                    var result = method.invoke(this.service, parameters);
+                    System.out.println(finishMessage + " sucesso");
                     return result;
                 } catch (Exception e) {
-                    System.out.println("Finalizando execução do método " + method.getName() + " com erro");
+                    System.out.println(finishMessage+  " erro");
                     return null;
                 }
             }
-            return method.invoke(this.service, myInterface.get());
+            return method.invoke(this.service, parameters);
         } catch (Exception e) {
             throw new RuntimeException();
         }

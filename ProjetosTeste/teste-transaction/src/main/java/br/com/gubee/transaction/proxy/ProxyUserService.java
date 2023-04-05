@@ -15,54 +15,75 @@ public class ProxyUserService implements UserService {
 
     @Override
     public User create(User user) {
-        var method = getMethod("create", User.class);
-        return (User) executeMethod(method, user);
+        return (User) executeMethod(() -> {
+                    try {
+                        Method method = this.service.getClass().getDeclaredMethod("create", User.class);
+                        return method;
+                    } catch (Exception e) {
+                        throw new RuntimeException("Invalid method");
+                    }
+                }
+                , user);
     }
 
     @Override
     public User findById(UUID id) {
-        var method = getMethod("findById", UUID.class);
-        return (User) executeMethod(method, id);
+        return (User) executeMethod(() -> {
+            try {
+                Method method = this.service.getClass().getDeclaredMethod("findById", UUID.class);
+                return method;
+            } catch (Exception e) {
+                throw new RuntimeException("Invalid method");
+            }
+        }, id);
     }
 
     @Override
     public User updateById(UUID id, User userToUpdate) {
-        var method = getMethod("updateById", UUID.class, User.class);
-        return (User) executeMethod(method, id, userToUpdate);
+        return (User) executeMethod(() -> {
+            try {
+                Method method = this.service.getClass().getDeclaredMethod("updateById", UUID.class, User.class);
+                return method;
+            } catch (Exception e) {
+                throw new RuntimeException("Invalid method");
+            }
+        }, id, userToUpdate);
     }
 
     @Override
     public void deleteById(UUID id) {
-        var method = getMethod("deleteById", UUID.class);
-        executeMethod(method, id);
-    }
-
-
-    private Object executeMethod(Method method, Object... parameters) {
-        if (method.isAnnotationPresent(Transaction.class)) {
-            System.out.println("Pattern Proxy");
-            System.out.println("Iniciando execução do método " + method.getName());
+        executeMethod(() -> {
             try {
-                var result = method.invoke(this.service, parameters);
-                System.out.println("Finalizando execução do método " + method.getName() + " com sucesso");
-                return result;
+                Method method = this.service.getClass().getDeclaredMethod("deleteById", UUID.class);
+                return method;
             } catch (Exception e) {
-                System.out.println("Finalizando execução do método " + method.getName() + " com erro");
-                return null;
+                throw new RuntimeException("Invalid Method");
             }
-        }
-        try {
-            return method.invoke(this.service, parameters);
-        } catch (Exception e) {
-            return null;
-        }
+        }, id);
     }
 
-    private Method getMethod(String methodName, Class... parametersType) {
+    private Object executeMethod(MyInterface myInterface, Object... parameters) {
+        var method = myInterface.getMethod();
         try {
-            return this.service.getClass().getDeclaredMethod(methodName, parametersType);
+            if (method.isAnnotationPresent(Transaction.class)) {
+                System.out.println("Pattern Proxy");
+                System.out.println("Iniciando execução do método " + method.getName());
+                try {
+                    var result = method.invoke(this.service, parameters);
+                    System.out.println("Finalizando execução do método " + method.getName() + " com sucesso");
+                    return result;
+                } catch (Exception e) {
+                    System.out.println("Finalizando execução do método " + method.getName() + " com erro");
+                    return null;
+                }
+            }
+            return method.invoke(this.service, parameters);
         } catch (Exception e) {
             throw new RuntimeException("Invalid method");
         }
     }
+}
+
+interface MyInterface {
+    Method getMethod();
 }

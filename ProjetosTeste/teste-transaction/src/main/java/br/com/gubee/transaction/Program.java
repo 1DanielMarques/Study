@@ -11,7 +11,7 @@ public class Program {
         var service = ServiceFactory.getFactory(FactoryType.PATTERN).createUserService();
         var createdUser = service.create(user);
 
-        var foundUser = service.findById(createdUser.getId());
+       var foundUser = service.findById(createdUser.getId());
 
         var userToUpdate = new User(null, "Joao", 22);
         service.updateById(foundUser.getId(), userToUpdate);

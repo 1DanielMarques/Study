@@ -1,7 +1,6 @@
 package org.example.testes;
 
 
-import org.example.core.model.Person;
 import org.example.testes2.Car;
 
 public class Main {

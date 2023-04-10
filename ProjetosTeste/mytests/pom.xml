@@ -10,7 +10,6 @@
     <packaging>pom</packaging>
     <modules>
         <module>testes</module>
-        <module>testes2</module>
         <module>core</module>
     </modules>
 

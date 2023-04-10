@@ -48,19 +48,20 @@ public class ProxyUserService implements UserService {
     private Object executeMethod(Method method, MyInterface myInterface) {
         var parameters = myInterface.get();
         var finishMessage = "Finalizando execução do método " + method.getName() + " com ";
-        try {
-            if (method.isAnnotationPresent(Transaction.class)) {
-                System.out.println("Pattern Proxy");
-                System.out.println("Iniciando execução do método " + method.getName());
-                try {
-                    var result = method.invoke(this.service, parameters);
-                    System.out.println(finishMessage + " sucesso");
-                    return result;
-                } catch (Exception e) {
-                    System.out.println(finishMessage+  " erro");
-                    return null;
-                }
+        if (method.isAnnotationPresent(Transaction.class)) {
+            System.out.println("Pattern Proxy");
+            System.out.println("Iniciando execução do método " + method.getName());
+            try {
+                var result = method.invoke(this.service, parameters);
+                System.out.println(finishMessage + " sucesso");
+                return result;
+            } catch (Exception e) {
+                System.out.println(finishMessage + " erro");
+                return null;
             }
+        }
+
+        try {
             return method.invoke(this.service, parameters);
         } catch (Exception e) {
             throw new RuntimeException();

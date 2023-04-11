@@ -6,7 +6,5 @@ public class Program {
         user.find(1);
         user.find(2);
         user.find(3);
-
-
     }
 }

@@ -6,6 +6,5 @@ public class UserDAOImpl implements UserDAO {
         System.out.println("Searching User[" + id + "]. . .");
         Thread.sleep(1000);
         System.out.println("User[" + id + "]");
-
     }
 }

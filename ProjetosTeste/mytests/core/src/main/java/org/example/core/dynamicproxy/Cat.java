@@ -1,6 +1,5 @@
 package org.example.core.dynamicproxy;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data

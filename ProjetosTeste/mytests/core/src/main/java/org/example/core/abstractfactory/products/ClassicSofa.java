@@ -7,7 +7,6 @@ public class ClassicSofa implements Sofa {
         System.out.println("Classic Sofa");
     }
 
-    @Override
     public boolean hasCushion() {
         return false;
     }

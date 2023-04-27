@@ -1,0 +1,9 @@
+spring:
+  r2dbc:
+    url: r2dbc:postgresql://localhost:5432/postgres?schema=anime
+    username: postgres
+    password: 7355608
+logging:
+  level:
+    io.r2dbc.postgresql.QUERY: DEBUG
+

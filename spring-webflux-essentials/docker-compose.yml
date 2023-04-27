@@ -1,0 +1,25 @@
+version: '3.9'
+
+services:
+  postgres:
+    image: postgres:15.2
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=7355608
+    ports:
+      - "5432:5432"
+    volumes:
+      - webflux_data:/var/lib/postgresql/data
+
+  pg-admin:
+    image: dpage/pgadmin4:6
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=odaniel.marques9@gmail.com
+      - PGADMIN_DEFAULT_PASSWORD=7355608
+      - PGADMIN_LISTEN_PORT=5050
+
+    ports:
+      - "5050:5050"
+
+volumes:
+  webflux_data:

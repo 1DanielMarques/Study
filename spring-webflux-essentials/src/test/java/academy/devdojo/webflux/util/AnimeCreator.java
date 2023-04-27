@@ -4,23 +4,23 @@ import academy.devdojo.webflux.domain.Anime;
 
 public class AnimeCreator {
 
-    public static Anime createAnimeToBeSaved(){
+    public static Anime createAnimeToBeSaved() {
         return Anime.builder()
-                .name("Kimetsu no Yaiba")
+                .name("Tensei Shitara Slime Datta Ken")
                 .build();
     }
 
-    public static Anime createValidAnime(){
+    public static Anime createValidAnime() {
         return Anime.builder()
                 .id(1)
-                .name("Kimetsu no Yaiba")
+                .name("Tensei Shitara Slime Datta Ken")
                 .build();
     }
 
-    public static Anime createValidUpdatedAnime(){
+    public static Anime createdValidUpdatedAnime() {
         return Anime.builder()
                 .id(1)
-                .name("Kimetsu no Yaiba 2")
+                .name("Tensei Shitara Slime Datta Ken 2")
                 .build();
     }
 }

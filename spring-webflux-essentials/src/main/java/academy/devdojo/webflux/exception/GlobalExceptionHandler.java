@@ -24,9 +24,11 @@ import static org.springframework.boot.web.error.ErrorAttributeOptions.*;
 @Order(-2)
 public class GlobalExceptionHandler extends AbstractErrorWebExceptionHandler {
 
-
-    public GlobalExceptionHandler(ErrorAttributes errorAttributes, WebProperties.Resources resources, ApplicationContext applicationContext, ServerCodecConfigurer codecConfigurer) {
-        super(errorAttributes, resources, applicationContext);
+    public GlobalExceptionHandler(ErrorAttributes errorAttributes,
+                                  WebProperties.Resources resourceProperties,
+                                  ApplicationContext applicationContext,
+                                  ServerCodecConfigurer codecConfigurer) {
+        super(errorAttributes, resourceProperties, applicationContext);
         this.setMessageWriters(codecConfigurer.getWriters());
     }
 
@@ -37,18 +39,19 @@ public class GlobalExceptionHandler extends AbstractErrorWebExceptionHandler {
 
     private Mono<ServerResponse> formatErrorResponse(ServerRequest request) {
         String query = request.uri().getQuery();
-       ErrorAttributeOptions errorAttributeOptions = isTraceEnable(query) ? of(Include.STACK_TRACE) : defaults();
+        ErrorAttributeOptions errorAttributeOptions = isTraceEnabled(query) ? of(Include.STACK_TRACE) : defaults();
+
         Map<String, Object> errorAttributesMap = getErrorAttributes(request, errorAttributeOptions);
         int status = (int) Optional.ofNullable(errorAttributesMap.get("status")).orElse(500);
-        return ServerResponse.status(status)
+        return ServerResponse
+                .status(status)
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(BodyInserters.fromValue(errorAttributesMap));
     }
 
-    private boolean isTraceEnable(String query){
+    private boolean isTraceEnabled(String query) {
         return !StringUtils.isEmpty(query) && query.contains("trace=true");
     }
-
 }
 
 
